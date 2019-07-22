@@ -1,9 +1,55 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>ModalPageEditUser</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar text-center>
+      <ion-title>{{modalTitle}}</ion-title>
+      <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">Close</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-grid>
+      <!--
+      <ion-row>
+        <ion-col text-center>
+          ID : {{user.id}}
+        </ion-col>
+        <ion-col text-center>
+            Name : {{user.first_name}} {{user.last_name}}
+          </ion-col>
+      </ion-row>
+      -->
+      <ion-row>
+        <ion-col text-center size="4">
+          First Name
+        </ion-col>
+        <ion-col text-center size="8">
+            <ion-input  type="text" name="namef" id="namef" value="{{user.first_name}}" placeholder="First Name" icon="pencil" style="background-color: coral;"></ion-input>
+          </ion-col>
+      </ion-row>
 
-<ion-content>
+      <ion-row>
+        <ion-col text-center size="4">
+            Last Name
+        </ion-col>
+        <ion-col text-center size="8">
+            <ion-input  type="text" name="namel" id="namel" value="{{user.last_name}}" placeholder="Last Name" icon="pencil" style="background-color: coral;"></ion-input>
+          </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col text-center size="4">
+          Phone
+        </ion-col>
+        <ion-col text-center size="8">
+            <ion-input  type="text" name="phone" id="phone" value="{{user.phone}}" placeholder="Phone" icon="pencil" style="background-color: coral;"></ion-input>
+          </ion-col>
+      </ion-row>        
 
-</ion-content>
+      <ion-row>
+        <ion-col text-center>
+          <ion-button (click)="closeModal()">Save</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>

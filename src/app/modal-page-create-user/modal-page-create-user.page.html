@@ -1,9 +1,49 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>ModalPageCreateUser</ion-title>
+  <ion-toolbar text-center>
+    <ion-title>{{modalTitle}}</ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="closeModal()">Close</ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content padding>
+  <ion-grid>
+    <!--
+    <ion-row>
+      <ion-col text-center>
+        ID : {{modelId}}
+      </ion-col>
+    </ion-row>
+    -->
+    <ion-row>
+        <ion-col text-center size="4">
+          First Name
+        </ion-col>
+        <ion-col text-center size="8">
+          <ion-input  type="text" name="namef" id="namef" placeholder="First Name" icon="pencil" style="background-color: coral;"></ion-input>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center size="4">
+        Last Name
+      </ion-col>
+      <ion-col text-center size="8">
+        <ion-input  type="text" name="namel" id="namel" placeholder="Last Name" icon="pencil" style="background-color: coral;"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center size="4">
+        Phone
+      </ion-col>
+      <ion-col text-center size="8">
+        <ion-input  type="text" name="phone" id="phone" placeholder="Phone" icon="pencil" style="background-color: coral;"></ion-input>
+      </ion-col>
+    </ion-row>    
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="closeModal()">Create New User</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

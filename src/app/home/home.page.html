@@ -4,14 +4,14 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home
+      CRUD SPA (Manage Users)
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-fab vertical="top" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="openCreatePersonModal()" color="warning" size="small">
+        <ion-fab-button (click)="openCreateUserModal()" color="warning" size="small">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
@@ -20,34 +20,49 @@
         <img src="/assets/shapes.svg" alt="" />
         -->
       <ion-card-header>
-        <ion-card-subtitle>Lets Manage Users</ion-card-subtitle>
-        <ion-card-title>Welcome to CRUD SPA</ion-card-title>
+        <!--
+        <ion-card-subtitle>Click on plus (+) buttun to add user</ion-card-subtitle>
+        -->
+        <ion-card-title>Users</ion-card-title>
       </ion-card-header>
+      <!--
       <ion-card-content>
         <p>Click on plus (+) buttun to add user</p>
       </ion-card-content>
-    </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Users</ion-label>
-      </ion-list-header>
-      <!--
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
       -->
-    </ion-list>
+    </ion-card>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="6" size-lg="4" size-xl="3" *ngFor="let user of userService.users; let i2 = index">
+          <ion-grid>
+            <ion-row>
+                <ion-col size="12">
+                    <!--<h1>{{user.id}} : {{user.label}}</h1>-->
+                    <h2>{{user.first_name}} {{user.last_name}}</h2>
+                    <h3>( {{user.phone}} )</h3>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+
+                <ion-col size-xs="6" size-sm="6" size-lg="6" size-xl="6">
+                          <ion-button (click)="openEditUserModal( i2 , user.id , user)" color="secondary" size="small">
+                              <ion-icon name="create"></ion-icon>
+                          </ion-button>
+                </ion-col>       
+                <ion-col size-xs="6" size-sm="6" size-lg="6" size-xl="6">       
+                          <ion-button (click)="removeUser( i2 , user.id , user)" color="danger" size="small">
+                              <ion-icon name="close-circle"></ion-icon>
+                          </ion-button>
+                </ion-col>
+                
+            </ion-row>
+
+          </ion-grid>
+
+        </ion-col>
+
+      </ion-row>
+
+  </ion-grid> 
 </ion-content>
