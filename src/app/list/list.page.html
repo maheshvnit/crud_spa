@@ -4,12 +4,29 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      List
+      Users
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="openCreatePersonModal()" color="warning" size="small">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-card class="welcome-card">
+        <!--
+        <img src="/assets/shapes.svg" alt="" />
+        -->
+        <ion-card-header>
+          <ion-card-subtitle>Lets Manage Users</ion-card-subtitle>
+          <ion-card-title>Welcome to CRUD SPA</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Click on plus (+) buttun to add user</p>
+        </ion-card-content>
+      </ion-card>    
   <ion-list>
     <ion-item *ngFor="let item of items">
       <ion-icon [name]="item.icon" slot="start"></ion-icon>

@@ -10,20 +10,28 @@
 </ion-header>
 
 <ion-content>
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="openCreatePersonModal()" color="warning" size="small">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
     <ion-card class="welcome-card">
-      <img src="/assets/shapes.svg" alt="" />
+       <!--
+        <img src="/assets/shapes.svg" alt="" />
+        -->
       <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
+        <ion-card-subtitle>Lets Manage Users</ion-card-subtitle>
+        <ion-card-title>Welcome to CRUD SPA</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
+        <p>Click on plus (+) buttun to add user</p>
       </ion-card-content>
     </ion-card>
     <ion-list lines="none">
       <ion-list-header>
-        <ion-label>Resources</ion-label>
+        <ion-label>Users</ion-label>
       </ion-list-header>
+      <!--
       <ion-item href="https://ionicframework.com/docs/">
         <ion-icon slot="start" color="medium" name="book"></ion-icon>
         <ion-label>Ionic Documentation</ion-label>
@@ -40,5 +48,6 @@
         <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
         <ion-label>Theme Your App</ion-label>
       </ion-item>
+      -->
     </ion-list>
 </ion-content>
