@@ -5,12 +5,14 @@ import { Injectable } from '@angular/core';
 
 //import { ModalPageLoadingPage } from '../modal-page-loading/modal-page-loading.page';
 
+// Import the application components and services.
+import { ApiClientService } from "./api-client.service";
 
-import { DatabaseService } from '../services/database.service';
+import { DatabaseService } from './database.service';
 
 import * as $ from 'jquery';
 //import * as moment from 'moment';
-//import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 //import { from } from 'rxjs';
 //import { async } from 'q';
 
@@ -22,15 +24,35 @@ export class UserService {
   public user: User;
   public users: User[] = [];  
 
+  public mode: any = 0; // local-0 / sqlite-1 / remote-2
+  public remote: Boolean = false;
+  public ws_url: any = '';
+  public bearer_token: any = '';
 
   public changeDetected: Boolean = false;
+
+  private apiClient: ApiClientService;
 
   constructor(
 
     public storageService: DatabaseService,
     //public modalCtrl : ModalController
+    apiClient: ApiClientService
 
-  ) { }
+  ) {
+
+      this.mode = storageService.mode;
+
+      this.remote = environment.remote;
+      this.ws_url = environment.ws_url;
+      this.bearer_token = environment.bearer_token;
+
+
+      this.apiClient = apiClient;
+      this.users = [];
+
+
+   }
 
 
   async loadingStart() {
@@ -207,6 +229,71 @@ export class UserService {
     console.log('----UserService--------removeUser------');
   }  
 
+  async loadLocalUsers() {
+    console.log('--UserService--loadLocalUsers--------1------');
+    let that = this;  
+
+    //console.log('that.users');
+
+    //console.log(that.users);
+
+    let res = await that.storageService.getItem("users");
+    console.log(res);
+    if(res != undefined && res != null) 
+    {
+      that.users = res;
+      //console.log(that.users);      
+    }    
+
+    console.log('--UserService--loadLocalUsers--------2------');
+  } 
+
+
+  async loadRemoteUsers() {
+    console.log('--UserService--loadRemoteUsers--------1------');
+    let that = this;  
+
+    console.log('--UserService--loadRemoteUsers--------2------');
+  }   
+
+  // ---
+  // PUBLIC METHODS.
+  // ---
+
+  // I load the list of friends.
+  public async loadRemoteUsers2() : Promise<void> {
+    console.log('--UserService--loadRemoteUsers2--------1------');
+    let that = this;  
+   
+    try {
+
+      console.log('--UserService--loadRemoteUsers2--------2------');
+
+      // NOTE: For the sake of simplicity, I'm letting the Component talk directly
+      // to the ApiClient. However, in a production app, I'd create an abstraction
+      // around Friend access (ie, something like FriendService or FriendGateway)
+      // which would handle the low-level details of the ApiClient request and
+      // error handling. But, since this is just a post about using Axios in
+      // Angular, I'm removing the middle man for the controlled scenario.
+      this.users = await this.apiClient.get<User[]>({
+          url: '/api/user',
+          params: {
+              limit: 10
+          }
+      });
+
+      console.log('--UserService--loadRemoteUsers2--------3------');
+
+    } catch ( error ) {
+
+      console.log('--UserService--loadRemoteUsers2--------4------');
+      console.error( error );       
+
+    }
+
+    console.log('--UserService--loadRemoteUsers2--------5------');
+  }  
+
 
   // Load users function
 
@@ -215,15 +302,19 @@ export class UserService {
     let that = this;
 
     console.log('that.users');
+    console.log(that.users); 
 
-    console.log(that.users);
-    let res = await that.storageService.getItem("users");
-    console.log(res);
-    if(res != undefined && res != null) 
+    if(that.remote)
     {
-      that.users = res;
-      console.log(that.users);      
+      that.loadRemoteUsers2();
     }
+    else
+    {
+      that.loadLocalUsers();
+    }
+
+    console.log('that.users');
+    console.log(that.users);        
 
     console.log('--UserService--loadUsers--------2------');
   } 

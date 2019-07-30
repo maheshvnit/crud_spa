@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
+//import { environment } from '../../environments/environment';
+
 declare let window: any; // <--- Declare it like this
 
 @Injectable({
@@ -8,7 +10,7 @@ declare let window: any; // <--- Declare it like this
 })
 export class DatabaseService {
 
-  public mode: any = 0; // sql-1/local-0
+  public mode: any = 0; // local-0 / sqlite-1 / remote-2
   public stObj: any = null;
 
   constructor(private storage: Storage) { 
