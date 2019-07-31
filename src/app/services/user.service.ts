@@ -149,10 +149,27 @@ export class UserService {
 
     console.log(that.users);
     console.log(that.user);
-    that.users.unshift(that.user);
-
     
-    that.storageService.setItem("users", that.users);
+
+    if(that.remote)
+    {
+      let userResponse = await that.apiClient.post<any>({
+          url: '/api/user',
+          params: {
+            first_name: first_name,
+            last_name: last_name,
+            phone: phone,
+            label: labelName,
+          }
+      });
+      console.log(userResponse);    
+    }
+    else
+    {
+      that.users.unshift(that.user);
+      that.storageService.setItem("users", that.users);
+    }    
+    
 
     that.storageService.setItem("usrcnt", usrcntN);  
     
@@ -164,7 +181,7 @@ export class UserService {
   
 
   // edit user
-  changeUser(formData) {
+  async changeUser(formData) {
     console.log('--UserService--changeUser--------1------');
     let that = this;
     console.log('formData');
@@ -191,16 +208,34 @@ export class UserService {
     let i=0;
     let id = formData.user.id;
 
-    for (; i<that.users.length; i++) {
-      if(that.users[i].id == id)
-      {        
-        that.users[i].first_name = first_name;
-        that.users[i].last_name = last_name;
-        that.users[i].phone = phone;
-      }
-    }  
-  
-    that.storageService.setItem("users", that.users);
+    if(that.remote)
+    {
+      let userResponse = await that.apiClient.put<any>({
+        url: '/api/user/'+id,
+        params: {
+          first_name: first_name,
+          last_name: last_name,
+          phone: phone
+        }
+      });
+      console.log(userResponse);         
+    }
+    else
+    {
+      for (; i<that.users.length; i++) {
+        if(that.users[i].id == id)
+        {        
+
+          that.users[i].first_name = first_name;
+          that.users[i].last_name = last_name;
+          that.users[i].phone = phone;
+
+          break;
+        }
+      }  
+    
+      that.storageService.setItem("users", that.users);
+    }
 
     that.changeDetected = true;
 
@@ -212,18 +247,34 @@ export class UserService {
   }    
 
   // remove user
-  removeUser(idx, uid, user) {
+  async removeUser(idx, uid, user) {
     console.log('----UserService--------removeUser------');
     let that = this;
 
     let pns = that.users[idx];
     if(uid == pns.id && pns.id == user.id)
     {
-      // remove user by index
-      let rmPns = that.users.splice(idx,1);
-      that.user = null;
-      // save on store remaining
-      that.storageService.setItem("users", that.users);
+
+      if(that.remote)
+      {
+
+        let userResponse = await that.apiClient.delete<any>({
+          url: '/api/user/'+uid,
+            params: {}
+        });
+        console.log(userResponse); 
+      }
+      else
+      {
+        // remove user by index
+        let rmPns = that.users.splice(idx,1);
+        that.user = null;
+        // save on store remaining
+        that.storageService.setItem("users", that.users);
+      }
+
+      that.changeDetected = true;
+
     }
 
     console.log('----UserService--------removeUser------');
@@ -275,12 +326,18 @@ export class UserService {
       // which would handle the low-level details of the ApiClient request and
       // error handling. But, since this is just a post about using Axios in
       // Angular, I'm removing the middle man for the controlled scenario.
-      this.users = await this.apiClient.get<User[]>({
+      let usersResponse = await that.apiClient.get<any>({
           url: '/api/user',
           params: {
               limit: 10
           }
       });
+      console.log(usersResponse);
+
+      that.users = usersResponse.data;
+
+      console.log('that.users');
+      console.log(that.users);        
 
       console.log('--UserService--loadRemoteUsers2--------3------');
 
