@@ -36,7 +36,7 @@ For demo use browser.
 
 Just run above command # ionic serve
 
-Used sglite for database on Android and localStorage on browser.
+Used sqlite database on Android/Ios and localStorage on browser.
 
 Remote web services can be used for full placed application.
 
