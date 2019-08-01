@@ -6,8 +6,8 @@ This is Ionic/Cordova/Angular Application for any platform.
 NodeJS and NPM required to run this demo
 
 Required Tools
---- Git
---- Node.js/NPM
+- Git
+- Node.js/NPM
 
 clone the repository 
 
