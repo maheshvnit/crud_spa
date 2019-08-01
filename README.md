@@ -42,3 +42,8 @@ Remote web services can be used for full placed application.
 
 For high traffic application Serverless REST APIs can used build on Amazon Web Services (AWS) using NodeJS/Python, AWS API Gateway, AWS Lambda and DynamoDB etc.
 
+# Backend System with web services / REST APIs can also be used as Remote
+
+Repository
+# https://github.com/maheshvnit/crud_ws_spa
+
